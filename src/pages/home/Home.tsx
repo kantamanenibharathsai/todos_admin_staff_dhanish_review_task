@@ -26,16 +26,9 @@ import {
   TaskRow,
 } from "../../utils/TypescriptData";
 import homeStyles from "./HomeStyles";
-import Calendar from "react-calendar";
-import dayjs, { Dayjs } from "dayjs";
 import "react-calendar/dist/Calendar.css";
-// import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
-// import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-// import dayjs, { Dayjs } from "dayjs";
-// import { LocalizationProvider } from '@mui/x-date-pickers-pro/LocalizationProvider';
-// import { AdapterDayjs } from '@mui/x-date-pickers-pro/AdapterDayjs';
-// import { DateRangeCalendar } from '@mui/x-date-pickers-pro/DateRangeCalendar';
-// import { DateRange } from '@mui/x-date-pickers-pro/models';
+import CustomCalendar from "../../components/CustomCalendar";
+
 
 const Home: React.FC = () => {
   const startDateRef = useRef<DatePickerRef | null>(null);
@@ -48,6 +41,7 @@ const Home: React.FC = () => {
   const [isStaffBtnClicked, setIsStaffBtnClicked] = useState<boolean>(false);
   const [isAdminBtnClicked, setIsAdminBtnClicked] = useState<boolean>(true);
   const [taskDates, setTaskDates] = useState<Date[]>([]);
+  const [selectedStaffPerson, setSelectedStaffPerson] =  useState<string>("");
 
   useEffect(() => {
     if (selectedStaff) {
@@ -80,12 +74,15 @@ const Home: React.FC = () => {
     setSelectedStaff(staffName);
   };
 
+  const handlelectedStaffPerson = (staffName: string): void => {
+    setSelectedStaffPerson(staffName);
+  };
+
   const handleSaveRow = () => {
     if (!selectedStaff || !taskName || !taskDescription || !startDate) {
       alert("Please fill in all fields");
       return;
     }
-
     const newRow = {
       id: (rows.length + 1).toString(),
       staffName: selectedStaff,
@@ -121,12 +118,12 @@ const Home: React.FC = () => {
     const updatedRows = rows.map((row) =>
       row.id === editingRowId
         ? {
-            ...row,
-            staffName: selectedStaff,
-            taskName,
-            taskDescription,
-            createdDate: startDate,
-          }
+          ...row,
+          staffName: selectedStaff,
+          taskName,
+          taskDescription,
+          createdDate: startDate,
+        }
         : row
     );
     setRows(updatedRows);
@@ -336,9 +333,9 @@ const Home: React.FC = () => {
           <Select
             required
             sx={homeStyles.selectEl}
-            value={selectedStaff}
+            value={selectedStaffPerson}
             displayEmpty
-            onChange={(event) => handleStaffChange(event.target.value)}
+            onChange={(event) => handlelectedStaffPerson(event.target.value)}
           >
             <MenuItem value="" disabled>
               Select Staff
@@ -349,14 +346,7 @@ const Home: React.FC = () => {
               </MenuItem>
             ))}
           </Select>
-
-          <Calendar
-            tileClassName={({ date, view }) =>
-              taskDates.find((d) => dayjs(d).isSame(dayjs(date), "day"))
-                ? "highlight"
-                : ""
-            }
-          />
+          <CustomCalendar staffRowsData = {rows} selectedStaffPerson={selectedStaffPerson}/>
         </Box>
       )}
     </Box>
