@@ -1,18 +1,20 @@
 const customCalendarStyles = {
     container: {
       width: "100%",
-      maxWidth: "480px",
-      margin: "auto",
-      padding: "10px",
+      maxWidth: "400px",
+      padding: "20px",
       backgroundColor: "#ffffff",
-      borderRadius: "8px",
-      boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
+      borderRadius: "12px",
+      boxShadow: "0 4px 8px rgba(0, 0, 0, 0.4)",
+      px: "50px",
+      marginTop: "-130px",
+      height: "430px"
     },
     header: {
       display: "flex",
       justifyContent: "space-between",
       alignItems: "center",
-      marginBottom: "15px", 
+      marginBottom: "20px", 
     },
     yearButton: {
       marginRight: "8px",

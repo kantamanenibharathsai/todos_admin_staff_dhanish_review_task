@@ -1,17 +1,14 @@
-import React, { useEffect, useState } from "react";
+import { ArrowBack, ArrowForward } from "@mui/icons-material";
 import {
   Box,
-  Typography,
   Button,
   Grid,
+  IconButton,
   Menu,
   MenuItem,
-  IconButton,
-  Card,
-  CardContent,
-  CardHeader,
+  Typography,
 } from "@mui/material";
-import { ArrowBack, ArrowForward } from "@mui/icons-material";
+import React, { useEffect, useState } from "react";
 import { TaskRow } from "../utils/TypescriptData";
 import customCalendarStyles from "./CustomCalendarStyles";
 
@@ -38,26 +35,33 @@ const daysInMonth = (year: number, month: number): number => {
 interface Props {
   staffRowsData: TaskRow[];
   selectedStaffPerson: string;
+  selectedTasksCardsHandler: (tasks: TaskRow[]) => void;
 }
 
-const CustomCalendar: React.FC<Props> = ({ staffRowsData, selectedStaffPerson }) => {
+const CustomCalendar: React.FC<Props> = ({
+  staffRowsData,
+  selectedStaffPerson,
+  selectedTasksCardsHandler,
+}) => {
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [yearAnchorEl, setYearAnchorEl] = useState<null | HTMLElement>(null);
   const [monthAnchorEl, setMonthAnchorEl] = useState<null | HTMLElement>(null);
   const [taskDates, setTaskDates] = useState<string[]>([]);
-  const [selectedTasks, setSelectedTasks] = useState<TaskRow[]>([]);
   const currentYear = selectedDate.getFullYear();
   const currentMonth = selectedDate.getMonth();
 
   useEffect(() => {
     if (selectedStaffPerson) {
       const dates = staffRowsData
-        .filter((row) => row.staffName === selectedStaffPerson && row.createdDate)
+        .filter(
+          (row) => row.staffName === selectedStaffPerson && row.createdDate
+        )
         .map((row) => {
           const date = new Date(row.createdDate);
-          return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}-${String(
-            date.getDate()
-          ).padStart(2, "0")}`;
+          return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(
+            2,
+            "0"
+          )}-${String(date.getDate()).padStart(2, "0")}`;
         });
       setTaskDates(dates);
     }
@@ -83,26 +87,29 @@ const CustomCalendar: React.FC<Props> = ({ staffRowsData, selectedStaffPerson })
   };
 
   const handleMonthChange = (direction: "prev" | "next") => {
+    selectedTasksCardsHandler([]);
     setSelectedDate((prevDate) => {
       const newMonth =
-        direction === "prev" ? prevDate.getMonth() - 1 : prevDate.getMonth() + 1;
+        direction === "prev"
+          ? prevDate.getMonth() - 1
+          : prevDate.getMonth() + 1;
       return new Date(prevDate.getFullYear(), newMonth, 1);
     });
   };
 
   const handleDateClick = (day: number) => {
-    const formattedDate = `${currentYear}-${String(currentMonth + 1).padStart(2, "0")}-${String(
-      day
-    ).padStart(2, "0")}`;
+    const formattedDate = `${currentYear}-${String(currentMonth + 1).padStart(
+      2,
+      "0"
+    )}-${String(day).padStart(2, "0")}`;
     setSelectedDate(new Date(currentYear, currentMonth, day));
-
 
     const tasksForDate = staffRowsData.filter(
       (task) =>
         task.staffName === selectedStaffPerson &&
         task.createdDate.startsWith(formattedDate)
     );
-    setSelectedTasks(tasksForDate);
+    selectedTasksCardsHandler(tasksForDate);
   };
 
   const renderCalendarDays = () => {
@@ -110,9 +117,10 @@ const CustomCalendar: React.FC<Props> = ({ staffRowsData, selectedStaffPerson })
 
     return Array.from({ length: days }, (_, i) => {
       const day = i + 1;
-      const formattedDate = `${currentYear}-${String(currentMonth + 1).padStart(2, "0")}-${String(
-        day
-      ).padStart(2, "0")}`;
+      const formattedDate = `${currentYear}-${String(currentMonth + 1).padStart(
+        2,
+        "0"
+      )}-${String(day).padStart(2, "0")}`;
       const isPreselected = taskDates.includes(formattedDate);
 
       return (
@@ -123,9 +131,11 @@ const CustomCalendar: React.FC<Props> = ({ staffRowsData, selectedStaffPerson })
             disabled={!isPreselected}
             onClick={() => handleDateClick(day)}
             sx={{
-              backgroundColor: isPreselected
-                ? "green"
-                : "#f0f0f0",
+              minWidth: "20px",
+              height: "20px",
+              paddingLeft: 0,
+              paddingRight: 0,
+              backgroundColor: isPreselected ? "green" : "#f0f0f0",
               color: isPreselected ? "white" : "#888",
               borderColor: isPreselected ? "green" : "#dcdcdc",
               "&:hover": {
@@ -138,27 +148,6 @@ const CustomCalendar: React.FC<Props> = ({ staffRowsData, selectedStaffPerson })
         </Grid>
       );
     });
-  };
-
-  const renderTasks = () => {
-    return selectedTasks.length > 0 ? (
-      <Grid container spacing={2} sx={{ marginTop: "20px" }}>
-        {selectedTasks.map((task) => (
-          <Grid item xs={12} sm={6} md={4} key={task.id}>
-            <Card sx={{ boxShadow: 3, borderRadius: "8px" }}>
-              <CardHeader title={task.taskName} subheader={task.createdDate} />
-              <CardContent>
-                <Typography variant="body2" color="text.secondary">
-                  {task.taskDescription}
-                </Typography>
-              </CardContent>
-            </Card>
-          </Grid>
-        ))}
-      </Grid>
-    ) : (
-      <Typography>No tasks for this date.</Typography>
-    );
   };
 
   return (
@@ -187,10 +176,17 @@ const CustomCalendar: React.FC<Props> = ({ staffRowsData, selectedStaffPerson })
               </MenuItem>
             ))}
           </Menu>
-          <IconButton onClick={() => handleMonthChange("prev")} style={customCalendarStyles.iconButton}>
+          <IconButton
+            onClick={() => handleMonthChange("prev")}
+            style={customCalendarStyles.iconButton}
+          >
             <ArrowBack />
           </IconButton>
-          <Button variant="text" onClick={openMonthMenu} style={customCalendarStyles.yearButton}>
+          <Button
+            variant="text"
+            onClick={openMonthMenu}
+            style={customCalendarStyles.yearButton}
+          >
             {months[currentMonth]}
           </Button>
           <Menu
@@ -205,13 +201,17 @@ const CustomCalendar: React.FC<Props> = ({ staffRowsData, selectedStaffPerson })
               </MenuItem>
             ))}
           </Menu>
-          <IconButton onClick={() => handleMonthChange("next")} style={customCalendarStyles.iconButton}>
+          <IconButton
+            onClick={() => handleMonthChange("next")}
+            style={customCalendarStyles.iconButton}
+          >
             <ArrowForward />
           </IconButton>
         </Box>
       </Box>
-      <Grid container spacing={2}>{renderCalendarDays()}</Grid>
-      {renderTasks()}
+      <Grid container spacing={2}>
+        {renderCalendarDays()}
+      </Grid>
     </Box>
   );
 };

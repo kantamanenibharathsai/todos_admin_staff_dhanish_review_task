@@ -45,19 +45,18 @@ const homeStyles = {
     // border: "2px solid orange",
     margin: "auto",
     mt: 5,
+    overflowY: "auto"
   },
 
   topCont: {
-    // border: "2px solid orange",
     width: "20%",
-    // margin: "auto",
   },
 
   allFieldsCont: {
     display: "flex",
     flexDirection: "column",
     gap: "20px",
-    width: "100%",
+    width: "20%",
     // border: "2px solid red",
   },
 
@@ -227,6 +226,7 @@ const homeStyles = {
     alignItems: "center",
     padding: "8px",
     height: "100px",
+    // border: "2px solid red"
   },
   editButton: {
     minWidth: "35px",
@@ -246,6 +246,64 @@ const homeStyles = {
   },
 
   btnsCont: { display: "flex", gap: "10px" },
+
+  leftCont: {
+    // border: "2px solid red",
+    display: "flex",
+    flexDirection: "column",
+    gap: 30,
+    width: "30%"
+  },
+
+  centeredBox: {
+    textAlign: "center",
+    overflowY: "auto",
+    height: "99.8%",
+    scrollbarWidth: "none", 
+    msOverflowStyle: "none", 
+    "&::-webkit-scrollbar": {
+      display: "none", 
+    },
+  },
+
+  card: {
+    width: "280px",
+    height: "250px",
+    boxShadow: "0px 4px 12px rgba(0, 0, 0, 0.15)",
+    borderRadius: "12px",
+    backgroundColor: "#f9f9f9",
+    padding: "8px",
+    overflowY: "auto",
+  },
+
+  cardHeader: {
+    paddingBottom: "0px",
+    fontSize: "14px",
+  },
+
+  cardContent: {
+    fontSize: "12px",
+    color: "#555",
+  },
+
+  rightCont: {
+    width: "70%",
+    // border: "2px solid red",
+    // height: "100%"
+  },
+
+  staffBodyCont: {
+    maxHeight: "840px",
+    // border: "5px solid red",
+    display: "flex",
+    flexDirection: "row",
+    gap: "2rem",
+    width: "90%",
+    margin: "auto",
+    mt: 5,
+
+    
+  }
 };
 
 export default homeStyles;
