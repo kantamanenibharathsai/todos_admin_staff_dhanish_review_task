@@ -25,6 +25,7 @@ interface CustomButtonProps {
   onClick: () => void;
   isEditIcon?: boolean;
   isDeleteIcon?: boolean;
+  isActive?: boolean;
 }
 
 const CustomButton: React.FC<CustomButtonProps> = ({
@@ -32,13 +33,11 @@ const CustomButton: React.FC<CustomButtonProps> = ({
   onClick,
   isEditIcon,
   isDeleteIcon,
+  isActive,
 }) => {
   if (isEditIcon) {
     return (
-      <Button
-        onClick={onClick}
-        sx={homeStyles.editButton}
-      >
+      <Button onClick={onClick} sx={homeStyles.editButton}>
         <EditIcon />
       </Button>
     );
@@ -46,18 +45,20 @@ const CustomButton: React.FC<CustomButtonProps> = ({
 
   if (isDeleteIcon) {
     return (
-      <Button
-        onClick={onClick}
-        sx={homeStyles.deleteButton}
-      >
+      <Button onClick={onClick} sx={homeStyles.deleteButton}>
         <DeleteIcon />
       </Button>
     );
   }
+
   return (
     <Button
       onClick={onClick}
-      sx={buttonStyles.button}
+      sx={{
+        ...buttonStyles.button,
+        backgroundColor: isActive ? "black" : "#fff",
+        color: !isActive ? "black" : "#fff",
+      }}
     >
       {text}
     </Button>

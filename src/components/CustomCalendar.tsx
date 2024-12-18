@@ -3,6 +3,7 @@ import {
   Box,
   Button,
   Grid,
+  Grid2,
   IconButton,
   Menu,
   MenuItem,
@@ -27,6 +28,19 @@ const months = [
   "November",
   "December",
 ];
+
+const getButtonStyles = (isPreselected: boolean) => ({
+  minWidth: "20px",
+  height: "20px",
+  paddingLeft: 0,
+  paddingRight: 0,
+  backgroundColor: isPreselected ? "green" : "#f0f0f0",
+  color: isPreselected ? "white" : "#888",
+  borderColor: isPreselected ? "green" : "#dcdcdc",
+  "&:hover": {
+    backgroundColor: isPreselected ? "darkgreen" : "#e0e0e0",
+  },
+});
 
 const daysInMonth = (year: number, month: number): number => {
   return new Date(year, month + 1, 0).getDate();
@@ -130,18 +144,7 @@ const CustomCalendar: React.FC<Props> = ({
             style={customCalendarStyles.dayButton(isPreselected)}
             disabled={!isPreselected}
             onClick={() => handleDateClick(day)}
-            sx={{
-              minWidth: "20px",
-              height: "20px",
-              paddingLeft: 0,
-              paddingRight: 0,
-              backgroundColor: isPreselected ? "green" : "#f0f0f0",
-              color: isPreselected ? "white" : "#888",
-              borderColor: isPreselected ? "green" : "#dcdcdc",
-              "&:hover": {
-                backgroundColor: isPreselected ? "darkgreen" : "#e0e0e0",
-              },
-            }}
+            sx={getButtonStyles(isPreselected)}
           >
             {day}
           </Button>
@@ -169,9 +172,14 @@ const CustomCalendar: React.FC<Props> = ({
             open={Boolean(yearAnchorEl)}
             onClose={closeYearMenu}
             PaperProps={{ style: customCalendarStyles.menuPaper }}
+            style={{ color: "#000" }}
           >
             {years.map((year) => (
-              <MenuItem key={year} onClick={() => handleYearSelect(year)}>
+              <MenuItem
+                key={year}
+                onClick={() => handleYearSelect(year)}
+                style={{ color: "#000" }}
+              >
                 {year}
               </MenuItem>
             ))}
@@ -209,9 +217,9 @@ const CustomCalendar: React.FC<Props> = ({
           </IconButton>
         </Box>
       </Box>
-      <Grid container spacing={2}>
+      <Grid2 container spacing={2}>
         {renderCalendarDays()}
-      </Grid>
+      </Grid2>
     </Box>
   );
 };

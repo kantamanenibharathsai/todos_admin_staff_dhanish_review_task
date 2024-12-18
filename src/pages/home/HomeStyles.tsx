@@ -42,7 +42,6 @@ const homeStyles = {
     flexDirection: "row",
     gap: "2rem",
     width: "90%",
-    // border: "2px solid orange",
     margin: "auto",
     mt: 5,
     overflowY: "auto"
@@ -57,7 +56,6 @@ const homeStyles = {
     flexDirection: "column",
     gap: "20px",
     width: "20%",
-    // border: "2px solid red",
   },
 
   textFieldStyle: {
@@ -226,7 +224,6 @@ const homeStyles = {
     alignItems: "center",
     padding: "8px",
     height: "100px",
-    // border: "2px solid red"
   },
   editButton: {
     minWidth: "35px",
@@ -248,7 +245,6 @@ const homeStyles = {
   btnsCont: { display: "flex", gap: "10px" },
 
   leftCont: {
-    // border: "2px solid red",
     display: "flex",
     flexDirection: "column",
     gap: 30,
@@ -288,21 +284,16 @@ const homeStyles = {
 
   rightCont: {
     width: "70%",
-    // border: "2px solid red",
-    // height: "100%"
   },
 
   staffBodyCont: {
     maxHeight: "840px",
-    // border: "5px solid red",
     display: "flex",
     flexDirection: "row",
     gap: "2rem",
     width: "90%",
     margin: "auto",
     mt: 5,
-
-    
   }
 };
 

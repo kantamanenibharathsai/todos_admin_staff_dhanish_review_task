@@ -8,7 +8,7 @@ const customCalendarStyles = {
       boxShadow: "0 4px 8px rgba(0, 0, 0, 0.4)",
       px: "50px",
       marginTop: "-130px",
-      height: "430px"
+      height: "350px"
     },
     header: {
       display: "flex",
@@ -18,11 +18,11 @@ const customCalendarStyles = {
     },
     yearButton: {
       marginRight: "8px",
-      color: "#007bff",
+      color: "#000",
       fontSize: "14px", 
     },
     iconButton: {
-      color: "#007bff",
+      color: "#00000",
       fontSize: "20px", 
     },
     textBlack: {
@@ -40,13 +40,18 @@ const customCalendarStyles = {
     gridCont: { textAlign: "center" },
   
     dayButton: (isPreselected: boolean) => ({
-      width: "100%",
-      height: "40px",
+      width: "35px",
+      height: "35px",
       borderRadius: "8px",
       backgroundColor: isPreselected ? "green" : "transparent",
       color: isPreselected ? "white" : "black",
       fontSize: "14px",
     }),
+
+    yearStyle: {
+      fontSize: "14px",
+      color: "#000",
+    }
   };
   
   export default customCalendarStyles;

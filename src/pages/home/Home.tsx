@@ -42,16 +42,15 @@ const Home: React.FC = () => {
   };
 
   const handleSaveTask = () => {
-    const newTask: TaskRow = {
-      id: Date.now().toString(),
-      staffName: selectedStaff,
-      createdDate: startDate,
-      taskName,
-      taskDescription,
-    };
-    setTasks([...tasks, newTask]);
-    clearForm();
+    if (selectedStaff && taskName && taskDescription && startDate) {
+      setTasks(prevTasks => [
+        ...prevTasks, 
+        { id: Date.now().toString(), staffName: selectedStaff, createdDate: startDate, taskName, taskDescription }
+      ]);
+      clearForm();
+    }
   };
+  
 
   const handleUpdateTask = () => {
     setTasks((prev) =>
